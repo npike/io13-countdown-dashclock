@@ -1,0 +1,6 @@
+# Can ignore specific files
+.DS_Store
+
+bin/
+gen/
+.metadata/
