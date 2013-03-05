@@ -25,23 +25,27 @@
 
     <plurals name="days">
         <item quantity="zero">0 days</item>
-        <item quantity="one">1 day</item> 
+        <item quantity="one">1 day</item>
         <item quantity="other">%d days</item>
     </plurals>
     <plurals name="hours">
         <item quantity="zero">0 hours</item>
-        <item quantity="one">1 hour</item> 
+        <item quantity="one">1 hour</item>
         <item quantity="other">%d hours</item>
     </plurals>
     <plurals name="minutes">
         <item quantity="zero">0 minutes</item>
-        <item quantity="one">1 minute</item> 
+        <item quantity="one">1 minute</item>
         <item quantity="other">%d minutes</item>
-    </plurals> 
-        <string name="registration_over">Registration over.</string> 
-        <string name="expanded_registration_over_good_luck_may_the_odds_be_ever_in_your_favor">Registration over.  Good luck.  May the odds be ever in your favor.</string> 
-        <string name="expanded_title">Google I/O 2013 Registration</string> 
-        <string name="url_io">https://developers.google.com/events/io/</string> 
-        <string name="expanded_body">%s until registration opens.</string>
+    </plurals>
+
+    <string name="registration_over">Registration over.</string>
+    <string name="expanded_registration_over_good_luck_may_the_odds_be_ever_in_your_favor">Registration over.  Good luck.  May the odds be ever in your favor.</string>
+    <string name="expanded_title">Google I/O 2013 Registration</string>
+    <string name="url_io">https://developers.google.com/events/io/</string>
+    <string name="expanded_body">%s until registration opens.</string>
+    <string name="short_title_days" formatted="false">%d D</string>
+    <string name="short_title_hours" formatted="false">%d H</string>
+    <string name="short_title_minutes" formatted="false">%d M</string>
 
 </resources>

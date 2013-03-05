@@ -35,46 +35,50 @@ public class ExtensionService extends DashClockExtension {
 		long milliseconds1 = calendarIO.getTimeInMillis();
 		long milliseconds2 = System.currentTimeMillis();
 		long diff = milliseconds1 - milliseconds2;
-		long diffSeconds = diff / 1000;
+
 		long diffMinutes = diff / (60 * 1000);
 		long diffHours = diff / (60 * 60 * 1000);
 		long diffDays = diff / (24 * 60 * 60 * 1000);
+
+		int realHours = (int) (diffHours - (diffDays * 24));
+		int realMinutes = (int) (diffMinutes - (diffHours * 60));
 
 		String shortTitle = "";
 		String relativeTime = "";
 
 		String days = getResources().getQuantityString(R.plurals.days,
 				(int) diffDays, (int) diffDays);
-		String hours = getResources().getQuantityString(R.plurals.hours,
-				(int) (diffHours - (diffDays * 24)),
-				(int) (diffHours - (diffDays * 24)));
-		String minutes = getResources().getQuantityString(R.plurals.minutes,
-				(int) (diffMinutes - (diffHours * 60)),
-				(int) (diffMinutes - (diffHours * 60)));
 
+		String hours = getResources().getQuantityString(R.plurals.hours,
+				realHours, realHours);
+
+		String minutes = getResources().getQuantityString(R.plurals.minutes,
+				realMinutes, realMinutes);
+
+		// Figure out what the short title should be.
 		if (diffDays > 0) {
-			shortTitle = days;
+			shortTitle = String.format(Locale.US,
+					getString(R.string.short_title_days), diffDays);
 		} else if (diffHours > 0) {
-			shortTitle = hours;
+			shortTitle = String.format(Locale.US,
+					getString(R.string.short_title_hours), realHours);
 		} else if (diffMinutes > 0) {
-			shortTitle = minutes;
+			shortTitle = String.format(Locale.US,
+					getString(R.string.short_title_minutes), realMinutes);
 		}
 
+		// Figure out what the expanded body will be.
 		if (diffDays > 0) {
 			relativeTime = String.format(Locale.US,
 					getString(R.string.full_countdown_days), days, hours,
 					minutes);
 		} else if (diffHours > 0) {
 			relativeTime = String.format(Locale.US,
-					getString(R.string.full_countdown_hours), diffHours
-							- (diffDays * 24), diffMinutes - (diffHours * 60),
-					diffSeconds - (diffMinutes * 60));
+					getString(R.string.full_countdown_hours), hours, minutes);
 
 		} else if (diffMinutes > 0) {
 			relativeTime = String.format(Locale.US,
-					getString(R.string.full_countdown_minutes), diffMinutes
-							- (diffHours * 60), diffSeconds
-							- (diffMinutes * 60));
+					getString(R.string.full_countdown_minutes), diffMinutes);
 		}
 
 		String expandedBody = String.format(Locale.US,
