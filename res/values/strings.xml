@@ -19,7 +19,6 @@
     <string name="app_name">I/O 2013 Registration Countdown for DashClock</string>
     <string name="extension_title">I/O 2013 Registration Countdown</string>
     <string name="extension_description">Displays a countdown until registration opens for I/O 2013.</string>
-    <string name="title_settings">Settings</string>
     <string name="full_countdown_days" formatted="false">%s, %s, %s</string>
     <string name="full_countdown_hours" formatted="false">%s, %s</string>
     <string name="full_countdown_minutes" formatted="false">%s</string>
