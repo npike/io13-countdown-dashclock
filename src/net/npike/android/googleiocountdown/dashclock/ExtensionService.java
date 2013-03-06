@@ -18,6 +18,7 @@ package net.npike.android.googleiocountdown.dashclock;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -27,22 +28,44 @@ import com.google.android.apps.dashclock.api.ExtensionData;
 
 public class ExtensionService extends DashClockExtension {
 
+	private static final String TIMEZONE_SF = "GMT-7";
+
 	@Override
 	protected void onUpdateData(int reason) {
-		Calendar calendarIO = Calendar.getInstance();
-		calendarIO.set(2013, 2, 14, 7, 0);
+		boolean isCountingDownToRegistration = true;
+		
+		Calendar calendarToday = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF)); 
 
-		long milliseconds1 = calendarIO.getTimeInMillis();
-		long milliseconds2 = System.currentTimeMillis();
-		long diff = milliseconds1 - milliseconds2;
+		Calendar calendarIORegistration = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
+		calendarIORegistration.set(2013, Calendar.MARCH, 13, 7, 0, 0); 
+		
+		Calendar calendarIO = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
+		calendarIO.set(2013, Calendar.MAY, 15, 0, 0);
+		
+
+		// would use DateUtils.getRelativeTimeSpan string, but I want to break out
+		// the day, hour, and minute values.
+		long registrationInMilliseconds = calendarIORegistration
+				.getTimeInMillis();
+		long ioInMilliseconds = calendarIO.getTimeInMillis();
+
+		long nowInMilliseconds = calendarToday.getTimeInMillis();
+
+		long diff = registrationInMilliseconds - nowInMilliseconds;
+
+		if (calendarToday.after(calendarIORegistration)) {
+			// start counting down to Google IO. Registration is over!
+			diff = ioInMilliseconds - nowInMilliseconds;
+			isCountingDownToRegistration = false;
+		} 
 
 		long diffMinutes = diff / (60 * 1000);
 		long diffHours = diff / (60 * 60 * 1000);
 		long diffDays = diff / (24 * 60 * 60 * 1000);
 
 		int realHours = (int) (diffHours - (diffDays * 24));
-		int realMinutes = (int) (diffMinutes - (diffHours * 60));
-
+		int realMinutes = (int) (diffMinutes - (diffHours * 60)); 
+		
 		String shortTitle = "";
 		String relativeTime = "";
 
@@ -58,10 +81,10 @@ public class ExtensionService extends DashClockExtension {
 		// Figure out what the short title should be.
 		if (diffDays > 0) {
 			shortTitle = String.format(Locale.US,
-					getString(R.string.short_title_days), diffDays);
+					getString(R.string.short_title_days), diffDays, realHours);
 		} else if (diffHours > 0) {
 			shortTitle = String.format(Locale.US,
-					getString(R.string.short_title_hours), realHours);
+					getString(R.string.short_title_hours), realHours, realMinutes);
 		} else if (diffMinutes > 0) {
 			shortTitle = String.format(Locale.US,
 					getString(R.string.short_title_minutes), realMinutes);
@@ -81,19 +104,36 @@ public class ExtensionService extends DashClockExtension {
 					getString(R.string.full_countdown_minutes), diffMinutes);
 		}
 
-		String expandedBody = String.format(Locale.US,
-				getString(R.string.expanded_body), relativeTime);
+		String expandedBody = "";
+		String expandedTitle = "";
 
-		if (relativeTime.length() == 0) {
-			shortTitle = getString(R.string.registration_over);
-			expandedBody = getString(R.string.expanded_registration_over_good_luck_may_the_odds_be_ever_in_your_favor);
+		if (isCountingDownToRegistration) {
+			expandedBody = String.format(Locale.US,
+					getString(R.string.expanded_body_registration), relativeTime);
+
+			if (relativeTime.length() == 0) {
+				shortTitle = getString(R.string.short_title_now);
+				expandedBody = getString(R.string.expanded_registration_over_good_luck_may_the_odds_be_ever_in_your_favor);
+			}
+
+			expandedTitle = getString(R.string.expanded_title_registration);
+		} else {
+			expandedBody = String.format(Locale.US,
+					getString(R.string.expanded_body_io), relativeTime);
+
+			if (relativeTime.length() == 0) {
+				shortTitle = getString(R.string.short_title_now);
+				expandedBody = getString(R.string.expanded_io_here);
+			}
+
+			expandedTitle = getString(R.string.expanded_title_io);
 		}
 
 		publishUpdate(new ExtensionData()
 				.visible(true)
 				.icon(R.drawable.ic_action_icon_dark)
 				.status(shortTitle)
-				.expandedTitle(getString(R.string.expanded_title))
+				.expandedTitle(expandedTitle)
 				.expandedBody(expandedBody)
 				.clickIntent(
 						new Intent(Intent.ACTION_VIEW, Uri
