@@ -47,8 +47,8 @@
     <string name="url_io">https://developers.google.com/events/io/</string>
     <string name="expanded_body_registration">%s until registration opens.</string>
     <string name="expanded_body_io">%s until I/O 13.</string>
-    <string name="short_title_days" formatted="false">%dd %dh</string>
-    <string name="short_title_hours" formatted="false">%dh %dm</string>
+    <string name="short_title_days" formatted="false">%d days\n%d hours</string>
+    <string name="short_title_hours" formatted="false">%dh hours\n%d minutes</string>
     <string name="short_title_minutes" formatted="false">%dm</string>
 
 </resources>
