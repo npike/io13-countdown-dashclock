@@ -21,7 +21,7 @@
 
     <uses-sdk
         android:minSdkVersion="17"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="false"
@@ -36,10 +36,10 @@
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-
+            <meta-data android:name="worldReadable" android:value="true" />
             <meta-data
                 android:name="protocolVersion"
-                android:value="1" />
+                android:value="2" />
             <meta-data
                 android:name="description"
                 android:value="@string/extension_description" />
