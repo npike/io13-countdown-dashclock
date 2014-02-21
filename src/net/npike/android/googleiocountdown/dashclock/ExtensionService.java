@@ -37,10 +37,10 @@ public class ExtensionService extends DashClockExtension {
 		Calendar calendarToday = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF)); 
 
 		Calendar calendarIORegistration = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
-		calendarIORegistration.set(2013, Calendar.MARCH, 13, 7, 0, 0); 
+		calendarIORegistration.set(2013, Calendar.MARCH, 13, 7, 0, 0);
 		
 		Calendar calendarIO = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
-		calendarIO.set(2013, Calendar.MAY, 15, 9, 0);
+		calendarIO.set(2014, Calendar.MAY, 25, 9, 0);
 		
 
 		// would use DateUtils.getRelativeTimeSpan string, but I want to break out
