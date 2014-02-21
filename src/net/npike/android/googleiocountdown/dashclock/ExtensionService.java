@@ -36,11 +36,13 @@ public class ExtensionService extends DashClockExtension {
 		
 		Calendar calendarToday = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF)); 
 
+        // We don't currently know the details of registration,
+        // So I am leaving this date in the past to avoid it showing up as a countdown.
 		Calendar calendarIORegistration = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
 		calendarIORegistration.set(2013, Calendar.MARCH, 13, 7, 0, 0);
 		
 		Calendar calendarIO = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
-		calendarIO.set(2014, Calendar.MAY, 25, 9, 0);
+		calendarIO.set(2014, Calendar.JUNE, 25, 9, 0);
 		
 
 		// would use DateUtils.getRelativeTimeSpan string, but I want to break out
