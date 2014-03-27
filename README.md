@@ -9,6 +9,6 @@ Supports the following countdowns:
 * Countdown to registration window end once it has started (April 10th @ 5PM PDT)
 * Countdown to I/O keynote once registration window has closed.
 
-[[/screenshots/screenshot_collapsed.png]]
 
-[[/screenshots/screenshot_expanded.png]]
+![ScreenShot](/screenshots/screenshot_collapsed.png)
+![ScreenShot](/screenshots/screenshot_expanded.png)
