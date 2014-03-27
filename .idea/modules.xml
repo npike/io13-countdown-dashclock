@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/IOCountdown/IOCountdown.iml" filepath="$PROJECT_DIR$/IOCountdown/IOCountdown.iml" />
       <module fileurl="file://$PROJECT_DIR$/io13-countdown-dashclock.iml" filepath="$PROJECT_DIR$/io13-countdown-dashclock.iml" />
     </modules>
   </component>
