@@ -30,16 +30,21 @@ public class ExtensionService extends DashClockExtension {
 
 	private static final String TIMEZONE_SF = "GMT-7";
 
+
 	@Override
 	protected void onUpdateData(int reason) {
 		boolean isCountingDownToRegistration = true;
+        boolean registrationWindowInProgress = false;
 		
 		Calendar calendarToday = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF)); 
 
-        // We don't currently know the details of registration,
-        // So I am leaving this date in the past to avoid it showing up as a countdown.
+        // IO this year has a 2.5 day registration period
+        // so it would be appropriate to show users a countdown until registration ends also.
 		Calendar calendarIORegistration = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
-		calendarIORegistration.set(2013, Calendar.MARCH, 13, 7, 0, 0);
+		calendarIORegistration.set(2014, Calendar.APRIL, 8, 5, 0, 0);
+
+        Calendar calendarIORegistrationEnd = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
+        calendarIORegistrationEnd.set(2014, Calendar.APRIL, 10, 17, 0, 0);
 		
 		Calendar calendarIO = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
 		calendarIO.set(2014, Calendar.JUNE, 25, 9, 0);
@@ -49,13 +54,18 @@ public class ExtensionService extends DashClockExtension {
 		// the day, hour, and minute values.
 		long registrationInMilliseconds = calendarIORegistration
 				.getTimeInMillis();
+        long registrationEndInMilliseconds = calendarIORegistrationEnd
+                .getTimeInMillis();
 		long ioInMilliseconds = calendarIO.getTimeInMillis();
 
 		long nowInMilliseconds = calendarToday.getTimeInMillis();
 
 		long diff = registrationInMilliseconds - nowInMilliseconds;
 
-		if (calendarToday.after(calendarIORegistration)) {
+        if (calendarToday.after(calendarIORegistration) && calendarToday.before(calendarIORegistrationEnd)) {
+            registrationWindowInProgress = true;
+            diff = registrationEndInMilliseconds - nowInMilliseconds;
+        } else if (calendarToday.after(calendarIORegistrationEnd)) {
 			// start counting down to Google IO. Registration is over!
 			diff = ioInMilliseconds - nowInMilliseconds;
 			isCountingDownToRegistration = false;
@@ -83,7 +93,7 @@ public class ExtensionService extends DashClockExtension {
 		// Figure out what the short title should be.
 		if (diffDays > 0) {
 			shortTitle = String.format(Locale.US,
-					getString(R.string.short_title_days), diffDays, realHours);
+					getString(R.string.short_title_days), (int)diffDays, realHours);
 		} else if (diffHours > 0) {
 			shortTitle = String.format(Locale.US,
 					getString(R.string.short_title_hours), realHours, realMinutes);
@@ -103,7 +113,7 @@ public class ExtensionService extends DashClockExtension {
 
 		} else if (diffMinutes > 0) {
 			relativeTime = String.format(Locale.US,
-					getString(R.string.full_countdown_minutes), diffMinutes);
+					getString(R.string.full_countdown_minutes), minutes);
 		}
 
 		String expandedBody = "";
@@ -113,10 +123,10 @@ public class ExtensionService extends DashClockExtension {
 			expandedBody = String.format(Locale.US,
 					getString(R.string.expanded_body_registration), relativeTime);
 
-			if (relativeTime.length() == 0) {
-				shortTitle = getString(R.string.short_title_now);
-				expandedBody = getString(R.string.expanded_registration_over_good_luck_may_the_odds_be_ever_in_your_favor);
-			}
+            if (registrationWindowInProgress) {
+                shortTitle = getString(R.string.short_title_now);
+                expandedBody = getString(R.string.expanded_registration_over_good_luck_may_the_odds_be_ever_in_your_favor, relativeTime);
+            }
 
 			expandedTitle = getString(R.string.expanded_title_registration);
 		} else {
