@@ -44,7 +44,7 @@
     <string name="expanded_io_here">Have fun at I/O 14!</string>
     <string name="expanded_title_registration">Google I/O 2014 Registration</string>
     <string name="expanded_title_io">Google I/O 2014</string>
-    <string name="url_io">https://developers.google.com/events/io/</string>
+    <string name="url_io">https://www.google.com/events/io</string>
     <string name="expanded_body_registration">%s until registration opens.</string>
     <string name="expanded_body_io">%s until I/O 14.</string>
     <string name="short_title_days" formatted="false">%d days\n%d hours</string>
