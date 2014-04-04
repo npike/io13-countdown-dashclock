@@ -4,6 +4,22 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    afterEvaluate { project ->
+        def propsFile = rootProject.file('keystore.properties')
+        def configName = 'release'
+
+        if (propsFile.exists() && android.signingConfigs.hasProperty(configName)) {
+            def props = new Properties()
+            props.load(new FileInputStream(propsFile))
+            android.signingConfigs[configName].storeFile = file(props['storeFile'])
+            android.signingConfigs[configName].storePassword = props['storePassword']
+            android.signingConfigs[configName].keyAlias = props['keyAlias']
+            android.signingConfigs[configName].keyPassword = props['keyPassword']
+        }
+    }
+}
+
 android {
     compileSdkVersion 19
     buildToolsVersion "19.0.3"
@@ -12,10 +28,21 @@ android {
         minSdkVersion 17
         targetSdkVersion 19
     }
+
+    signingConfigs {
+        release {
+            def props = new Properties()
+            props.load(new FileInputStream(rootProject.file('keystore.properties')))
+
+            storeFile file(props['storeFile'])
+            storePassword props['storePassword']
+            keyAlias props['keyAlias']
+            keyPassword props['keyPassword']
+        }
+    }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
         }
     }
 }
