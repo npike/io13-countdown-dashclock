@@ -16,15 +16,15 @@
 
 package net.npike.android.googleiocountdown.dashclock;
 
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import android.content.Intent;
 import android.net.Uri;
 
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;
+
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class ExtensionService extends DashClockExtension {
 
@@ -41,10 +41,10 @@ public class ExtensionService extends DashClockExtension {
         // IO this year has a 2.5 day registration period
         // so it would be appropriate to show users a countdown until registration ends also.
 		Calendar calendarIORegistration = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
-		calendarIORegistration.set(2014, Calendar.APRIL, 8, 5, 0, 0);
+		calendarIORegistration.set(2014, Calendar.APRIL, 15, 5, 0, 0);
 
         Calendar calendarIORegistrationEnd = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
-        calendarIORegistrationEnd.set(2014, Calendar.APRIL, 10, 17, 0, 0);
+        calendarIORegistrationEnd.set(2014, Calendar.APRIL, 18, 17, 0, 0);
 		
 		Calendar calendarIO = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_SF));
 		calendarIO.set(2014, Calendar.JUNE, 25, 9, 0);
